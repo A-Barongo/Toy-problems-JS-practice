@@ -1,112 +1,112 @@
-Student Grade Generator, Speed Detector & Net Salary Calculator
+# Net Salary Calculator, Student Grade Generator & Speed Detector
 
-Project Overview
--------------------------------------
+## Overview
+This project consists of three JavaScript programs:
 
-This project consists of three JavaScript programs that solve common computational problems:
+1. **Student Grade Generator** - Takes student marks as input and returns the corresponding grade.
+2. **Speed Detector** - Determines if a driver is speeding and calculates demerit points.
+3. **Net Salary Calculator** - Computes an individual's net salary based on provided salary and benefits.
 
-Student Grade Generator: Determines a student's grade based on their marks.
+## Installation & Usage
+To run this project, follow these steps:
 
-Speed Detector: Checks if a driver is speeding and calculates demerit points.
+1. Ensure you have a browser or Node.js installed.
+2. Copy the JavaScript code into a `.js` file.
+3. Run the file in a browser console or using Node.js:
+   ```sh
+   node filename.js
+   ```
 
-Net Salary Calculator: Computes an individual's net salary by accounting for PAYE, NHIF, and NSSF deductions.
---------------------------------------------------------------------------------------------------------------------------
-1. Student Grade Generator
-------------------------
-Description
-----------
-This function prompts the user to input student marks (0-100) and determines their grade based on the following scale:
+---
 
-A: Above 79
+## 1. Student Grade Generator
 
-B: 60 to 79
+### Description
+This function prompts the user to enter student marks (0-100) and returns the corresponding grade:
 
-C: 50 to 59
+| Marks Range | Grade |
+|------------|-------|
+| > 79       | A     |
+| 60 - 79    | B     |
+| 50 - 59    | C     |
+| 40 - 49    | D     |
+| < 40       | E     |
 
-D: 40 to 49
-
-E: Below 40
-
-How It Works
-
-The function takes user input, converts it to a number, and validates it.
-
-It assigns a grade based on predefined thresholds.
-
-The grade is displayed in the console and returned as output.
-
-Usage
-
+### Code Sample
+```js
+function getStudentGrade() {
+    let marks = prompt("Enter student marks (0-100):");
+    marks = Number(marks);
+    if (isNaN(marks) || marks < 0 || marks > 100) {
+        return "Invalid input. Please enter a number between 0 and 100.";
+    }
+    let grade = marks > 79 ? "A" : marks >= 60 ? "B" : marks >= 50 ? "C" : marks >= 40 ? "D" : "E";
+    console.log(`The student's grade is: ${grade}`);
+    return grade;
+}
 getStudentGrade();
+```
 
-2. Speed Detector
+---
 
-Description
+## 2. Speed Detector
 
-This function checks if a car's speed exceeds 70 km/h and assigns demerit points based on the excess speed. If the driver accumulates more than 12 demerit points, their license is suspended.
+### Description
+- Takes the car speed as input.
+- If speed is below 70, prints "Ok".
+- If speed is above 70, calculates demerit points (1 point per 5 km/s over 70).
+- If the points exceed 12, prints "License suspended".
 
-Rules
-
-Speed ≤ 70: "Ok"
-
-Every 5 km/s over 70: 1 demerit point
-
-More than 12 demerit points: "License suspended"
-
-How It Works
-
-The function takes the car speed as input.
-
-It determines the number of demerit points based on excess speed.
-
-It returns "Ok" if the speed is below 70.
-
-If points exceed 12, it outputs "License suspended."
-
-Usage
-
+### Code Sample
+```js
+function speedDetector() {
+    let speed = prompt('Enter your speed:');
+    speed = Number(speed);
+    if (isNaN(speed) || speed < 0) return "Invalid input!";
+    if (speed <= 70) return "Ok";
+    let points = Math.floor((speed - 70) / 5);
+    return points > 12 ? "License suspended" : `Points: ${points}`;
+}
 speedDetector();
+```
 
-3. Net Salary Calculator
+---
 
-Description
+## 3. Net Salary Calculator
 
-This program calculates an individual's net salary by factoring in basic salary, benefits, PAYE tax, NHIF deductions, and NSSF contributions.
+### Description
+- Takes `basic salary` and `benefits` as input.
+- Computes `Gross Salary`, `PAYE (Tax)`, `NHIF`, `NSSF`, and `Net Salary`.
+- Uses KRA tax rates.
 
-How It Works
+### Code Sample
+```js
+function calculateNetSalary(basicSalary, benefits) {
+    let grossSalary = basicSalary + benefits;
+    let payee = calculatePayee(grossSalary);
+    let nhif = grossSalary * 0.0275;
+    let nssf = Math.min(7000, grossSalary) * 0.06;
+    let netSalary = grossSalary - (payee + nhif + nssf);
+    return { Gross_Salary: grossSalary, Payee: payee, NHIF: nhif, NSSF: nssf, Net_Salary: netSalary };
+}
+console.log(calculateNetSalary(50000, 10000));
+```
 
-The user inputs their basic salary and benefits.
+---
 
-The gross salary is computed as:
+## Author
+**Allan Barongo** - Developer
 
-Gross Salary = Basic Salary + Benefits
+## License
+This project is open-source and available for modification.
 
-The program calculates deductions:
+---
 
-PAYE (Tax) is determined based on KRA tax brackets.
+## Contributions
+Feel free to contribute to this project! Fork the repository, make changes, and submit a pull request.
 
-NHIF is calculated at a fixed rate of 2.75% of gross salary.
+---
 
-NSSF depends on the selected contribution tier (1 or 2).
-
-The net salary is computed as:
-
-Net Salary = Gross Salary - (PAYE + NHIF + NSSF)
-
-The final salary breakdown is displayed.
-
-Usage
-
-calculateNetSalary();
-
-Technologies Used
-
-JavaScript (ES6+)
-
-Browser-based input handling
-
-Basic arithmetic and conditional logic
-
-Author
-
-This project was created to solve fundamental financial and driving-related computations using JavaScript.
+## Acknowledgments
+- **Kenya Revenue Authority (KRA)** for tax rate references.
+- **NHIF & NSSF** for deduction rates.
